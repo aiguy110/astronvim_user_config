@@ -29,12 +29,16 @@ return {
     },
     -- tables with the `name` key will be registered with which-key if it's installed
     -- this is useful for naming menus
-    ["<leader>b"] = { name = "Buffers" },
-    -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+
+    -- alternate to <F7> to openning ToggleTerm
+    ["<C-\\>"] = { ":ToggleTerm<cr>" },
   },
   t = {
     -- setting a mapping to false will disable it
     -- ["<esc>"] = false,
+
+    -- alternate to <F7> to closing ToggleTerm
+    ["<C-\\>"] = { "<C-\\><C-n>:ToggleTerm<cr>" },
   },
 }
