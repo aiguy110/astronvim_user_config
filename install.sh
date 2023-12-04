@@ -79,7 +79,7 @@ function install_nvim_config() {
     cd ~/.config
 
     # Clone parent AstroNvim repo over HTTPS
-    git clone --depth 1 https://github.com/aiguy110/AtroNvim nvim
+    git clone --depth 1 https://github.com/AstroNvim/AstroNvim nvim
 
     # Try cloning this repo via SSH, and prompt for HTTPS clone if that fails
     git clone --depth 1 git@github.com:aiguy110/astronvim_user_config nvim/lua/user
