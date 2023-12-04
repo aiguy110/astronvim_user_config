@@ -86,7 +86,7 @@ function install_nvim_config() {
     if [ $? -ne 0 ]; then
         read -p 'Issue cloning using SSH. Clone using HTTPS? [Yn]' HTTP_CLONE < $TTY
         if [ "$(echo "$HTTP_CLONE" | tr 'A-Z' 'a-z')" != "n" ]; then
-            git clone --depth 1 https://github.com:aiguy110/astronvim_user_config nvim/lua/user
+            git clone --depth 1 https://github.com/aiguy110/astronvim_user_config nvim/lua/user
         else
             echo "Aborting. Consider using ssh-add to add a valid SSH key for this account and trying again."
             exit
