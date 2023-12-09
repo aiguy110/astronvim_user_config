@@ -32,7 +32,7 @@ return {
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
 
     -- alternate to <F7> to openning ToggleTerm
-    ["<C-\\>"] = { ":ToggleTerm direction='horizontal'<cr>" },
+    ["<C-\\>"] = { ":ToggleTerm direction='horizontal' size=20<cr>" },
   },
   t = {
     -- setting a mapping to false will disable it
