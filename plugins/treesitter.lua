@@ -10,7 +10,6 @@ return {
         "css",
         "go",
         "graphql",
-        "help",
         "html",
         "http",
         "javascript",
