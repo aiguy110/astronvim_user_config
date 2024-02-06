@@ -59,10 +59,10 @@ return {
           pylsp = {
             plugins = {
               pycodestyle = {
-                maxLineLength = 120
+                maxLineLength = 140
               },
               flake8 = {
-                maxLineLength = 120
+                maxLineLength = 140
               }
             }
           }
