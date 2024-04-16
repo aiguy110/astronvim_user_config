@@ -50,7 +50,8 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      'pylsp'
+      'pylsp',
+      'jdtls'
     },
     -- custom server configuration
     config = {
@@ -67,7 +68,26 @@ return {
             }
           }
         }
-      }
+      },
+      jdtls = function()
+        return {
+          cmd = {
+            'docker',
+            'run',
+            '--pid=host',
+            '-i',
+            '-v',
+            vim.fn.getcwd() .. ':' .. vim.fn.getcwd(),
+            '-v',
+            os.getenv('HOME') .. '/.m2:/root/.m2',
+            '--network',
+            'host',
+            'kaylebor/eclipse.jdt.ls:v0.60.0'
+          },
+          filetypes = {'java'},
+          root_dir = require('lspconfig.util').root_pattern('pom.xml', 'gradle.build'),
+        }
+      end
     }
   },
 
