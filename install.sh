@@ -18,11 +18,17 @@ function install_nvim_bin() {
     mkdir -p $TMP_DIR
     cd $TMP_DIR
 
+    # Figure out which appimage to download
+    APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+    if [ "$(uname -m)" == "aaarch64" ]; then
+        APPIMAGE_URL="https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.9.4/nvim-v0.9.4-aarch64.appimage"
+    fi
+
     # Download and extract Appimage
-    wget -q --show-progress https://github.com/neovim/neovim/releases/download/stable/nvim.appimage 
+    wget -q --show-progress $APPIMAGE_URL -O nvim.appimage
     if [ $? -ne 0 ]; then
         echo "Error downloading nvim.appimage. Trying again without \"--show-progress\"."
-        wget -q https://github.com/neovim/neovim/releases/download/stable/nvim.appimage 
+        wget -q $APPIMAGE_URL -O nvim.appimage 
         if [ $? -ne 0 ]; then
             echo "Still can't download nvim.appimage. Exiting."
             exit
