@@ -85,7 +85,7 @@ function install_nvim_config() {
     cd ~/.config
 
     # Clone parent AstroNvim repo over HTTPS
-    git clone --depth 1 https://github.com/AstroNvim/AstroNvim nvim
+    git clone https://github.com/AstroNvim/AstroNvim nvim
     
     # Checkout latest 3.x.x tag. Probably need to upgrade to 4.x.x at some point.
     cd nvim
