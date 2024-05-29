@@ -1,3 +1,46 @@
+-- Create an autocmd group for Markdown wrapping
+vim.api.nvim_create_augroup("WrapMarkdown", { clear = true })
+
+-- Enable wrap and linebreak for Markdown files
+vim.api.nvim_create_autocmd("FileType", {
+  group = "WrapMarkdown",
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+  end,
+})
+
+-- Disable wrap in code blocks
+vim.api.nvim_create_autocmd("Syntax", {
+  group = "WrapMarkdown",
+  pattern = "markdown",
+  callback = function()
+    local syntax = vim.fn.synIDattr(vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1), "name")
+    if syntax == "markdownCodeBlock" then
+      vim.opt_local.wrap = false
+    end
+  end,
+})
+
+-- Function to toggle nvim-cmp
+local cmp = require'cmp'
+local function toggle_cmp()
+  if cmp.get_config().enabled then
+    cmp.setup { enabled = false }
+    print("nvim-cmp disabled")
+  else
+    cmp.setup { enabled = true }
+    print("nvim-cmp enabled")
+  end
+end
+
+-- Create a Neovim command to toggle nvim-cmp
+vim.api.nvim_create_user_command('ToggleCmp', function()
+  toggle_cmp()
+end, {})
+
+
 return {
   -- Configure AstroNvim updates
   updater = {
