@@ -1,25 +1,58 @@
+function Trim(s)
+  return s:match("^%s*(.-)%s$")
+end
+
+
+function IsCent7()
+  return Trim(vim.fn.system("cat /etc/centos-release | grep -c 'CentOS Linux release 7'")) == '1'
+end
+
+
+local function get_parsers()
+  local parsers_to_install = {
+    "c",
+    "css",
+    "go",
+    "graphql",
+    "http",
+    "json",
+    "lua",
+    "python",
+    "rust",
+  }
+
+  -- The following parsers will fail to compile on CentOS 7 and cause annoying error messages
+  if not IsCent7() then
+    table.insert(parsers_to_install, "bash")
+    table.insert(parsers_to_install, "comment")
+    table.insert(parsers_to_install, "html")
+    table.insert(parsers_to_install, "javascript")
+    table.insert(parsers_to_install, "typescript")
+  end
+
+  return parsers_to_install
+end
+
+
+local function get_ignore_install()
+  if IsCent7() then
+    return { "markdown", "bash", "vim", "comment", "html", "javascript", "typescript" }
+  else
+    return {}
+  end
+end
+
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       -- A list of parser names, or "all" (the four listed parsers should always be installed)
-      ensure_installed = {
-        "bash",
-        "c",
-        "comment",
-        "css",
-        "go",
-        "graphql",
-        "html",
-        "http",
-        "javascript",
-        "json",
-        "latex",
-        "lua",
-        "python",
-        "rust",
-        "typescript",
-      },
+      ensure_installed = get_parsers(),
+
+      ignore_install = get_ignore_install(),
+
+      -- 
 
       -- Enable indentation
       indent = {
