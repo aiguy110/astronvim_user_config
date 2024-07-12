@@ -1,3 +1,6 @@
+-- Use `less` as the pager
+vim.opt.keywordprg = ':silent !less'
+
 -- Create an autocmd group for Markdown wrapping
 vim.api.nvim_create_augroup("WrapMarkdown", { clear = true })
 
@@ -22,23 +25,6 @@ vim.api.nvim_create_autocmd("Syntax", {
     end
   end,
 })
-
--- Function to toggle nvim-cmp
-local cmp = require'cmp'
-local function toggle_cmp()
-  if cmp.get_config().enabled then
-    cmp.setup { enabled = false }
-    print("nvim-cmp disabled")
-  else
-    cmp.setup { enabled = true }
-    print("nvim-cmp enabled")
-  end
-end
-
--- Create a Neovim command to toggle nvim-cmp
-vim.api.nvim_create_user_command('ToggleCmp', function()
-  toggle_cmp()
-end, {})
 
 
 return {
@@ -130,6 +116,59 @@ return {
           filetypes = {'java'},
           root_dir = require('lspconfig.util').root_pattern('pom.xml', 'gradle.build'),
         }
+      end,
+      rust_analyzer = function()
+        -- Get local Cargo.toml path, if present
+        local function get_cargo_toml_content()
+          local path = vim.fn.getcwd() .. "/Cargo.toml"
+          local file = io.open(path, "r")
+          if file then
+            local content = file:read("*a")
+            file:close()
+            return content
+          end
+          return nil
+        end
+
+        -- Load toml.lua
+        local function load_toml()
+          local function get_script_dir()
+            local str = debug.getinfo(2, "S").source:sub(2)
+            return str:match("(.*/)")
+          end
+
+          local script_dir = get_script_dir()
+          package.path = package.path .. ";" .. script_dir .. "?.lua"
+          local toml = require("toml")
+          return toml
+        end
+
+        -- If there is a Cargo.toml file, load it and get the the lsp_settings.features table
+        local rust_lsp_features = {}
+        local cargo_toml_content = get_cargo_toml_content()
+        if cargo_toml_content then
+          local toml = load_toml()
+          local cargo_toml = toml.parse(cargo_toml_content)
+          if cargo_toml and cargo_toml.lsp and cargo_toml.lsp.features then
+            rust_lsp_features = cargo_toml.lsp.features
+          end
+        end
+
+        local rust_lsp_config = {
+          settings = {
+            ["rust-analyzer"] = {
+              cargo = {
+                -- loadOutDirsFromCheck = true,
+                features = rust_lsp_features,
+              },
+              procMacro = {
+                enable = true
+              }
+            }
+          }
+        }
+
+        return rust_lsp_config
       end
     }
   },
