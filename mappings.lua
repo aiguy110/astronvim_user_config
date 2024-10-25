@@ -3,6 +3,11 @@
 -- Please use this mappings table to set keyboard mapping since this is the
 -- lower level configuration and more robust one. (which-key will
 -- automatically pick-up stored data by this setting.)
+
+local function toggle_inlay_hints()
+  vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(nil))
+end
+
 return {
   -- first key is the mode
   n = {
@@ -33,6 +38,7 @@ return {
 
     -- alternate to <F7> to openning ToggleTerm
     ["<C-\\>"] = { ":ToggleTerm direction='horizontal' size=20<cr>" },
+    ["<C-i>"] = { toggle_inlay_hints }
   },
   t = {
     -- setting a mapping to false will disable it

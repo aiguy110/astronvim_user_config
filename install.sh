@@ -21,7 +21,7 @@ function install_nvim_bin() {
     # Figure out which appimage to download
     APPIMAGE_URL="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
     if [ "$(uname -m)" == "aarch64" ]; then
-        APPIMAGE_URL="https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.9.4/nvim-v0.9.4-aarch64.appimage"
+        APPIMAGE_URL="https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.10.2/nvim-v0.10.2-aarch64.appimage"
     fi
 
     # Download and extract Appimage
