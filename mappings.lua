@@ -38,7 +38,7 @@ return {
 
     -- alternate to <F7> to openning ToggleTerm
     ["<C-\\>"] = { ":ToggleTerm direction='horizontal' size=20<cr>" },
-    ["<C-i>"] = { toggle_inlay_hints }
+    -- ["<C-I>"] = { toggle_inlay_hints }
   },
   t = {
     -- setting a mapping to false will disable it

@@ -6,8 +6,9 @@ return {
         local dap = require("dap")
         dap.adapters.python = {
           type = "executable",
-          command = "/usr/bin/python3",
+          command = "/usr/bin/env",
           args = {
+            "python",
             "-m",
             "debugpy.adapter",
           },
